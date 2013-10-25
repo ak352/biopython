@@ -49,6 +49,7 @@ def read(handle):
         elif line[0] == "[":
             section = ""
         elif section == "HEADER":
+            # Read the number of columns and rows in the cel file
             keyword, value = line.split("=", 1)
             if keyword == "Cols":
                 record.ncols = int(value)
@@ -59,6 +60,7 @@ def read(handle):
                 continue
             words = line.split()
             y, x = map(int, words[:2])
+            # Format of intensities is x, y, intensity, stdevs, npix
             record.intensities[x, y] = float(words[2])
             record.stdevs[x, y] = float(words[3])
             record.npix[x, y] = int(words[4])
